@@ -9,7 +9,9 @@ const GetDetails = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch(`http://localhost:5000/api/v1/userDetails?teamName=${teamName}`);
+            const response = await fetch(`http://localhost:5000/api/v1/test?teamName=${teamName}`,{
+                METHOD : 'GET',
+            });
             const data = await response.json();
 
             if (response.ok) {

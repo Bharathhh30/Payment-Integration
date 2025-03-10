@@ -1,22 +1,26 @@
+
 import Team from "../models/register.model.js";
 
+export const testController = async(req,res)=>{
+    const {teamName} = req.query;
+    // console.log(teamName)
+    
 
-export const userDetails = async(req,res) => {
     try{
-        const {teamName} = req.query;
-
         if(!teamName){
             return res.status(400).json({message:"Team Name is required"})
         }
         const team = await Team.findOne({ teamName });
-
+        // console.log("normal")
+        // console.log(team,"team")
         if (!team) {
             return res.status(404).json({ message: "Team not found" });
         }
-
         res.status(200).json({ teamMembers: team.teamMembers });
-    }catch(error){
-        res.status(500).json({ message: "Error fetching team details", error: error.message });
+
+
+    }catch{
+
     }
-    res.send("Hello")
+
 }

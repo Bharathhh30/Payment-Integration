@@ -3,7 +3,12 @@ import { userDetails } from "../controller/userDetails.controller.js";
 
 const userDetailsRouter = Router();
 
-userDetailsRouter.get("/userDetails",userDetails)
+userDetailsRouter.get("/userDetails",(req,res)=>{
+    res.send("Hello")
+})
 
+userDetailsRouter.get("/u",(req,res)=>{
+    res.send("Hello")
+})
 
 export default userDetailsRouter;
