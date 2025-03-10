@@ -2,6 +2,7 @@ import express from 'express';
 import connetToDataBase from './databse/mongodb.js';
 import cors from 'cors';    
 import registerRouter from './routes/register.js';
+import userDetailsRouter from './routes/userDetails.js';
 
 
 const app = express();
@@ -17,6 +18,7 @@ const corsOptions = {
 app.use(cors(corsOptions))
 
 app.use('/api/v1',registerRouter)
+app.use('api/v1',userDetailsRouter)
 app.get('/',(req,res)=>{
     res.send("Server is running on port 5000")
 })
