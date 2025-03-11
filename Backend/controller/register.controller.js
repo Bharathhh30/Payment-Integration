@@ -10,7 +10,9 @@ export const registerTeam = async(req,res) => {
             events,
             domain,
             collegeName,
-            teamMembers
+            teamMembers,
+            utrNumber,
+            
         } = req.body;
 
         // checking if it is working
@@ -34,7 +36,9 @@ export const registerTeam = async(req,res) => {
             events,
             domain,
             collegeName,
-            teamMembers
+            teamMembers,
+            utrNumber,
+           
           });
 
           await newTeam.save();

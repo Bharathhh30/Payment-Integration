@@ -39,6 +39,10 @@ const TeamSchema = new mongoose.Schema({
             phone : Number,
             email : String
         }],
+    utrNumber: { 
+        type: String,
+        required: true 
+    },
     
 },{timestamps : true})
 
