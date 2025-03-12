@@ -13,7 +13,7 @@ function Register() {
     collegeName : "",
     teamMembers : [],
     utrNumber : "",
-    screenShot : null
+    screenshot : null
 
   })
 
@@ -77,36 +77,46 @@ const handleFileChange = (e) => {
   console.log(file)
   setFormData((prev) => ({
       ...prev,
-      screenShot: file // Storing the file object
+      screenshot: file // Storing the file object
   }));
 };
 
 
-  const handleSubmit = async(e) => {
-    e.preventDefault();
-    try{
-      const response = await fetch('http://localhost:5000/api/v1/register',{
-        method : 'POST',
-        headers : {
-          'Content-Type' : 'application/json'
-        },
-        body : JSON.stringify(formData)
-      })
-      const data = await response.json();
-      if (response.ok) {
-        console.log("Registration Successful:", data);
-        alert("Team Registered Successfully!");
-      } else {
-        console.error("Error:", data);
-        alert(data.message || "Something went wrong");
-      }
-    }catch(err){
-      console.log(err)
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  const data = new FormData();
+  data.append("teamName", formData.teamName);
+  data.append("teamLeader", formData.teamLeader);
+  data.append("teamLeaderEmail", formData.teamLeaderEmail);
+  data.append("teamSize", formData.teamSize);
+  data.append("events", JSON.stringify(formData.events)); // Convert array to JSON
+  data.append("domain", formData.domain);
+  data.append("collegeName", formData.collegeName);
+  data.append("teamMembers", JSON.stringify(formData.teamMembers)); // Convert array to JSON
+  data.append("utrNumber", formData.utrNumber);
+  data.append("screenshot", formData.screenshot); // Append file
+
+  try {
+    const response = await fetch("http://localhost:5000/api/v1/register", {
+      method: "POST",
+      body: data, // No need to set Content-Type for FormData
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      console.log("Success:", result);
+      alert("Team Registered Successfully!");
+    } else {
+      console.error("Error:", result);
+      alert("Error: " + result.message);
     }
-
-
-    console.log(formData)
+  } catch (error) {
+    console.error("Fetch error:", error);
+    alert("Something went wrong!");
   }
+};
+
 
 
 

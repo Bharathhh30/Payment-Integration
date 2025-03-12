@@ -1,5 +1,25 @@
 import mongoose from "mongoose";
 
+const TeamMemberSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    year: {
+        type: Number,
+        required: true
+    },
+    phone: {
+        type: String,  // Phone numbers should be strings to avoid issues with leading zeros
+        required: true
+    },
+    email: {
+        type: String,
+        required: true,
+        trim: true
+    }
+});
 
 const TeamSchema = new mongoose.Schema({
     teamName : {
@@ -33,12 +53,10 @@ const TeamSchema = new mongoose.Schema({
         type : String,
         required : true
     },
-    teamMembers : 
-        [{name : String , 
-            year : Number,
-            phone : Number,
-            email : String
-        }],
+    teamMembers : {
+        type: [TeamMemberSchema], // Explicitly define it as an array of subdocuments
+        required: true
+    },
     utrNumber: { 
         type: String,
         required: true 
