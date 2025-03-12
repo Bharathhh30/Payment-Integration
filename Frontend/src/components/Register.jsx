@@ -74,6 +74,7 @@ function Register() {
 
 const handleFileChange = (e) => {
   const file = e.target.files[0]; 
+  console.log(file)
   setFormData((prev) => ({
       ...prev,
       screenShot: file // Storing the file object

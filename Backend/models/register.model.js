@@ -43,7 +43,9 @@ const TeamSchema = new mongoose.Schema({
         type: String,
         required: true 
     },
-    
+    screenshot: {
+         type: String
+    }, // Store Cloudinary URL instead of file
 },{timestamps : true})
 
 

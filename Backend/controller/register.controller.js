@@ -14,7 +14,14 @@ export const registerTeam = async(req,res) => {
             utrNumber,
             
         } = req.body;
-
+        // taking screenshot alaag see
+        const screenshot = req.file ? req.file.path : null;
+        if (!screenshot) {
+            return res.status(400).json({ error: "Screenshot is required" });
+        }
+        // checking for screenshot
+        console.log(screenshot)
+        
         // checking if it is working
         console.log(teamName)
         // endukaina manchidi ani checking
@@ -38,7 +45,7 @@ export const registerTeam = async(req,res) => {
             collegeName,
             teamMembers,
             utrNumber,
-           
+            screenshot
           });
 
           await newTeam.save();
