@@ -9,7 +9,7 @@ import testRouter from './routes/test.js';
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use("/uploads", express.static("uploads"));
 
 const corsOptions = {
     origin: "http://localhost:5173", // Allow only frontend running on port 5174

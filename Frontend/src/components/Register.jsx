@@ -13,7 +13,7 @@ function Register() {
     collegeName : "",
     teamMembers : [],
     utrNumber : "",
-    screenshot : null
+    screenShot : null
 
   })
 
@@ -74,46 +74,55 @@ function Register() {
 
 const handleFileChange = (e) => {
   const file = e.target.files[0]; 
-  console.log(file)
   setFormData((prev) => ({
       ...prev,
-      screenshot: file // Storing the file object
+      screenShot: file // Storing the file object
   }));
 };
 
 
 const handleSubmit = async (e) => {
   e.preventDefault();
-  const data = new FormData();
-  data.append("teamName", formData.teamName);
-  data.append("teamLeader", formData.teamLeader);
-  data.append("teamLeaderEmail", formData.teamLeaderEmail);
-  data.append("teamSize", formData.teamSize);
-  data.append("events", JSON.stringify(formData.events)); // Convert array to JSON
-  data.append("domain", formData.domain);
-  data.append("collegeName", formData.collegeName);
-  data.append("teamMembers", JSON.stringify(formData.teamMembers)); // Convert array to JSON
-  data.append("utrNumber", formData.utrNumber);
-  data.append("screenshot", formData.screenshot); // Append file
 
+  const formDataToSend = new FormData();
+  formDataToSend.append("teamName", formData.teamName);
+  formDataToSend.append("teamLeader", formData.teamLeader);
+  formDataToSend.append("teamLeaderEmail", formData.teamLeaderEmail);
+  formDataToSend.append("teamSize", formData.teamSize);
+  formDataToSend.append("utrNumber", formData.utrNumber);
+  formDataToSend.append("domain", formData.domain);
+  formDataToSend.append("collegeName", formData.collegeName);
+
+  // Convert arrays into JSON before sending
+  formDataToSend.append("events", JSON.stringify(formData.events));
+  formDataToSend.append("teamMembers", JSON.stringify(formData.teamMembers));
+
+  // Append file (screenshot)
+  if (formData.screenShot) {
+      formDataToSend.append("screenShot", formData.screenShot);
+  }
+  // console.log("Form Data to Send:", formDataToSend);
+  console.log("Sending FormData:");
+  for (const pair of formDataToSend.entries()) {
+      console.log(pair[0], pair[1]);
+  }
   try {
-    const response = await fetch("http://localhost:5000/api/v1/register", {
-      method: "POST",
-      body: data, // No need to set Content-Type for FormData
-    });
+      const response = await fetch("http://localhost:5000/api/v1/register", {
+          method: "POST",
+          body: formDataToSend, // No need for 'Content-Type', fetch handles it
+      });
 
-    const result = await response.json();
-
-    if (response.ok) {
-      console.log("Success:", result);
-      alert("Team Registered Successfully!");
-    } else {
-      console.error("Error:", result);
-      alert("Error: " + result.message);
-    }
+      const result = await response.json();
+      
+      if (response.ok) {
+          console.log("Registration Successful:", result);
+          alert("Team Registered Successfully!");
+      } else {
+          console.error("Error:", result);
+          alert(result.message || "Something went wrong");
+      }
   } catch (error) {
-    console.error("Fetch error:", error);
-    alert("Something went wrong!");
+      console.error("Request Failed:", error);
   }
 };
 
@@ -282,10 +291,10 @@ const handleSubmit = async (e) => {
               </div>
               {/* screenshot of payment */}
               <div>
-                <label htmlFor="screenshot" className='font-bold text-2xl'>Upload Payment Screenshot:</label>
+                <label htmlFor="screeShot" className='font-bold text-2xl'>Upload Payment Screenshot:</label>
                 <input 
                   type="file" 
-                  name='screenshot'
+                  name='screenShot'
                   className='border-2 rounded-md h-10 w-75 p-3'
                   accept="image/*" 
                   onChange={handleFileChange}
