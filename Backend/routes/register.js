@@ -10,4 +10,8 @@ registerRouter.get("/register",(req,res)=>{
     res.send(req.body)
 })
 
+registerRouter.get("/register/res",(req,res)=>{
+    res.send("Checkign for auto deploy")
+})
+
 export default registerRouter;
