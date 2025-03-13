@@ -16,6 +16,7 @@ function Register() {
     screenShot : null
 
   })
+  const [loading,setLoading] = useState(false)
 
   const costPerMember = 500
   const eventsList = ["Hackathon", "Design-a-thon", "Poster Presentation", "ProjectExpo"];  
@@ -83,6 +84,7 @@ const handleFileChange = (e) => {
 
 const handleSubmit = async (e) => {
   e.preventDefault();
+  setLoading(true);
 
   const formDataToSend = new FormData();
   formDataToSend.append("teamName", formData.teamName);
@@ -123,6 +125,8 @@ const handleSubmit = async (e) => {
       }
   } catch (error) {
       console.error("Request Failed:", error);
+  }finally{
+    setLoading(false)
   }
 };
 
@@ -311,6 +315,7 @@ const handleSubmit = async (e) => {
           {/* Submit Button */}
           <button type="submit" className="bg-blue-500 text-white p-3 rounded-md">
             Submit
+            
           </button>
 
         </form>
