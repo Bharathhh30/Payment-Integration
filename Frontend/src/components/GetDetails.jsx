@@ -3,6 +3,7 @@ import { useState } from "react";
 const GetDetails = () => {
     const [teamName, setTeamName] = useState("");
     const [teamMembers, setTeamMembers] = useState([]);
+    const [screenshot, setScreenshot] = useState("");
     const [error, setError] = useState("");
 
     const handleSubmit = async (e) => {
@@ -16,6 +17,7 @@ const GetDetails = () => {
 
             if (response.ok) {
                 setTeamMembers(data.teamMembers);
+                setScreenshot(data.screenshot); 
                 setError(""); // Clear errors
             } else {
                 setError(data.message);
@@ -53,6 +55,13 @@ const GetDetails = () => {
                             <li key={index}>{member.name} - {member.email}</li>
                         ))}
                     </ul>
+                </div>
+            )}
+
+            {screenshot && (
+                <div>
+                    <h3>Payment Screenshot:</h3>
+                    <img src={screenshot} alt="Payment Screenshot" style={{ width: "300px" }} />
                 </div>
             )}
         </div>

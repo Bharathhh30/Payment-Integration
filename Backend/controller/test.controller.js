@@ -16,7 +16,10 @@ export const testController = async(req,res)=>{
         if (!team) {
             return res.status(404).json({ message: "Team not found" });
         }
-        res.status(200).json({ teamMembers: team.teamMembers });
+        res.status(200).json({ 
+            teamMembers: team.teamMembers,
+            screenshot: team.screenshot
+         });
 
 
     }catch{

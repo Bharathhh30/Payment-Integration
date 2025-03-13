@@ -81,31 +81,51 @@ const handleFileChange = (e) => {
 };
 
 
-  const handleSubmit = async(e) => {
-    e.preventDefault();
-    try{
-      const response = await fetch('http://localhost:5000/api/v1/register',{
-        method : 'POST',
-        headers : {
-          'Content-Type' : 'application/json'
-        },
-        body : JSON.stringify(formData)
-      })
-      const data = await response.json();
-      if (response.ok) {
-        console.log("Registration Successful:", data);
-        alert("Team Registered Successfully!");
-      } else {
-        console.error("Error:", data);
-        alert(data.message || "Something went wrong");
-      }
-    }catch(err){
-      console.log(err)
-    }
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
+  const formDataToSend = new FormData();
+  formDataToSend.append("teamName", formData.teamName);
+  formDataToSend.append("teamLeader", formData.teamLeader);
+  formDataToSend.append("teamLeaderEmail", formData.teamLeaderEmail);
+  formDataToSend.append("teamSize", formData.teamSize);
+  formDataToSend.append("utrNumber", formData.utrNumber);
+  formDataToSend.append("domain", formData.domain);
+  formDataToSend.append("collegeName", formData.collegeName);
 
-    console.log(formData)
+  // Convert arrays into JSON before sending
+  formDataToSend.append("events", JSON.stringify(formData.events));
+  formDataToSend.append("teamMembers", JSON.stringify(formData.teamMembers));
+
+  // Append file (screenshot)
+  if (formData.screenShot) {
+      formDataToSend.append("screenShot", formData.screenShot);
   }
+  // console.log("Form Data to Send:", formDataToSend);
+  console.log("Sending FormData:");
+  for (const pair of formDataToSend.entries()) {
+      console.log(pair[0], pair[1]);
+  }
+  try {
+      const response = await fetch("http://localhost:5000/api/v1/register", {
+          method: "POST",
+          body: formDataToSend, // No need for 'Content-Type', fetch handles it
+      });
+
+      const result = await response.json();
+      
+      if (response.ok) {
+          console.log("Registration Successful:", result);
+          alert("Team Registered Successfully!");
+      } else {
+          console.error("Error:", result);
+          alert(result.message || "Something went wrong");
+      }
+  } catch (error) {
+      console.error("Request Failed:", error);
+  }
+};
+
 
 
 
@@ -271,10 +291,10 @@ const handleFileChange = (e) => {
               </div>
               {/* screenshot of payment */}
               <div>
-                <label htmlFor="screenshot" className='font-bold text-2xl'>Upload Payment Screenshot:</label>
+                <label htmlFor="screeShot" className='font-bold text-2xl'>Upload Payment Screenshot:</label>
                 <input 
                   type="file" 
-                  name='screenshot'
+                  name='screenShot'
                   className='border-2 rounded-md h-10 w-75 p-3'
                   accept="image/*" 
                   onChange={handleFileChange}
