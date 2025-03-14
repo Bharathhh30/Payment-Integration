@@ -21,7 +21,8 @@ export const testController = async(req,res)=>{
             teamLeader: team.teamLeader,
             teamMembers: team.teamMembers,
             utrNumber : team.utrNumber,
-            screenshot: team.screenshot
+            screenshot: team.screenshot,
+            membershipID : team.membershipID,
          });
 
 

@@ -35,10 +35,16 @@ const TeamSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    stateName : {
+        type: String,
+        required: true
+    },
     teamMembers: {
         type: [{
             name: { type: String, required: true },
-            year: { type: Number, required: true, min: 1 },
+            year: { type: String,
+                 required: true,
+                   },
             phone: { 
                 type: String, 
                 required: true, 
@@ -48,6 +54,10 @@ const TeamSchema = new mongoose.Schema({
                 type: String, 
                 required: true, 
                 match: [/^\S+@\S+\.\S+$/, "Invalid email format"] 
+            },
+            membershipID: { 
+                type: String, 
+                default : "No Membership ID"
             }
         }],
         required: true,

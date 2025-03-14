@@ -7,13 +7,14 @@ const GetDetails = () => {
     const [teamMembers, setTeamMembers] = useState([]);
     const [utrNumber, setUtrNumber] = useState("");
     const [screenshot, setScreenshot] = useState("");
+    const [membershipID, setMembershipID] = useState("");
     const [error, setError] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const response = await fetch(`https://hackathon-site-backend.onrender.com/api/v1/test?teamLeaderEmail=${teamLeaderEmail}`,{
+            const response = await fetch(`http://localhost:5000/api/v1/test?teamLeaderEmail=${teamLeaderEmail}`,{
                 METHOD : 'GET',
             });
             const data = await response.json();
@@ -23,6 +24,7 @@ const GetDetails = () => {
                 setTeamLeader(data.teamLeader);
                 setTeamMembers(data.teamMembers);
                 setScreenshot(data.screenshot); 
+                setMembershipID(data.membershipID);
                 setUtrNumber(data.utrNumber);
                 setError(""); // Clear errors
             } else {
@@ -63,7 +65,7 @@ const GetDetails = () => {
                     <h3 className="font-semibold">Team Members:</h3>
                     <ul className="list-disc ml-5">
                         {teamMembers.map((member, index) => (
-                            <li key={index}>{member.name} - {member.email} - {member.year}</li>
+                            <li key={index}>{member.name} - {member.email} - {member.year}-{member.membershipID}</li>
                         ))}
                     </ul>
                 </div>

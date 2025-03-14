@@ -10,6 +10,7 @@ export const registerTeam = async(req,res) => {
             events,
             domain,
             collegeName,
+            stateName,
             teamMembers,
             utrNumber,
             
@@ -45,6 +46,7 @@ export const registerTeam = async(req,res) => {
             events: parsedEvents,
             domain,
             collegeName,
+            stateName,
             teamMembers: parsedTeamMembers,
             utrNumber,
             screenshot : screenshotUrl // Store file path in database
