@@ -11,6 +11,7 @@ function Register() {
     events : [],
     domain : "",
     collegeName : "",
+    stateName : "",
     teamMembers : [],
     utrNumber : "",
     screenShot : null
@@ -41,6 +42,7 @@ function Register() {
           year: prev.teamMembers[index]?.year || "",
           phone: prev.teamMembers[index]?.phone || "",
           email: prev.teamMembers[index]?.email || "",
+          membershipID: prev.teamMembers[index]?.membershipID || "",
         }));
         return { ...prev, teamSize: value, teamMembers: updatedMembers };
       });
@@ -94,6 +96,7 @@ const handleSubmit = async (e) => {
   formDataToSend.append("utrNumber", formData.utrNumber);
   formDataToSend.append("domain", formData.domain);
   formDataToSend.append("collegeName", formData.collegeName);
+  formDataToSend.append("stateName", formData.stateName);
 
   // Convert arrays into JSON before sending
   formDataToSend.append("events", JSON.stringify(formData.events));
@@ -109,7 +112,7 @@ const handleSubmit = async (e) => {
       console.log(pair[0], pair[1]);
   }
   try {
-      const response = await fetch("https://hackathon-site-backend.onrender.com/api/v1/register", {
+      const response = await fetch("http://localhost:5000/api/v1/register", {
           method: "POST",
           body: formDataToSend, // No need for 'Content-Type', fetch handles it
       });
@@ -200,6 +203,12 @@ const handleSubmit = async (e) => {
             <input type="text" name="collegeName" id="collegeName" onChange={handleChangeInData} value={formData.collegeName} placeholder='Enter College Name' className='border-2 rounded-md h-10 w-75 p-3' required />
           </div>
 
+          {/* State */}
+          <div className='flex flex-col p-2'>
+            <label htmlFor="stateName" className='font-bold text-2xl'>State Name</label>
+            <input type="text" name="stateName" id="stateName" onChange={handleChangeInData} value={formData.stateName} placeholder='Enter State Name' className='border-2 rounded-md h-10 w-75 p-3' required />
+          </div>
+
           {/* Team Member Details (Based on team size we will render that many inputs for name , year , phn no , email and store it as a array of team info) */}
           <div className='flex flex-col p-2'>
             
@@ -262,6 +271,20 @@ const handleSubmit = async (e) => {
                       placeholder='Enter Email' 
                       className='border-2 rounded-md h-10 w-full p-3' 
                       required 
+                    />
+                  </div>
+
+                  <div className='flex flex-col p-2'>
+                    <label htmlFor={`teamMemberCSIMemberShipID-${index}`} className='font-bold text-lg'>CSI MemberShip ID</label>
+                    <input 
+                      type="membershipID" 
+                      name="membershipID" 
+                      id={`teamMemberCSIMemberShipID-${index}`} 
+                      onChange={(e) => handleTeamMemberChange(index, e)} 
+                      value={formData.teamMembers[index]?.membershipID || ''} 
+                      placeholder='Enter CSI MemberShip ID (NA if u dont have)' 
+                      className='border-2 rounded-md h-10 w-full p-3' 
+                      
                     />
                   </div>
     
