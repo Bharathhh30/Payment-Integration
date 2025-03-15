@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static("uploads"));
 
 const corsOptions = {
-    origin: "*", // Allow only frontend running on port 5174
+    origin: "*", // Allow only frontend running on port 5174 (now allow from everywhere)
     methods: "GET,POST,PUT,DELETE",
     credentials: true, // Allow cookies or authentication headers
   };
