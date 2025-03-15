@@ -14,7 +14,7 @@ const GetDetails = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch(`http://localhost:5000/api/v1/test?teamLeaderEmail=${teamLeaderEmail}`,{
+            const response = await fetch(`https://hackathon-site-backend.onrender.com/api/v1/test?teamLeaderEmail=${teamLeaderEmail}`,{
                 METHOD : 'GET',
             });
             const data = await response.json();

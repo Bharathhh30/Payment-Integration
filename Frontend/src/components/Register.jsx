@@ -112,7 +112,7 @@ const handleSubmit = async (e) => {
       console.log(pair[0], pair[1]);
   }
   try {
-      const response = await fetch("http://localhost:5000/api/v1/register", {
+      const response = await fetch("https://hackathon-site-backend.onrender.com/api/v1/register", {
           method: "POST",
           body: formDataToSend, // No need for 'Content-Type', fetch handles it
       });
