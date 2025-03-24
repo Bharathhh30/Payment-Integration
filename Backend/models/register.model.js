@@ -48,7 +48,7 @@ const TeamSchema = new mongoose.Schema({
             phone: { 
                 type: String, 
                 required: true, 
-                match: [/^\d{10,15}$/, "Invalid phone number"] // Ensures valid phone number format
+                //match: [/^\d{10,15}$/, "Invalid phone number"] // Ensures valid phone number format
             },
             email: { 
                 type: String, 
