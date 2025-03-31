@@ -35,3 +35,6 @@ to test the post route /api/v1/register - use the below json data
 
 
 Also have some idea on the way we are trying to render the screenshots 
+
+
+worked on spreadsheets but deployment went wrong with the presence of service account ,let me know if u have figured it out
