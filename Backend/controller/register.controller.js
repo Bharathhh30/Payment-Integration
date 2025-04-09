@@ -1,29 +1,10 @@
 import Team from "../models/register.model.js";
 import { google } from "googleapis";
-import fs from "fs";
 import dotenv from "dotenv";
-import os from "os";
-import path from "path";
+import sheets from "../utils/sheets.js";
+
 dotenv.config();
 
-// process.env.GOOGLE_APPLICATION_CREDENTIALS = "./config/service-account.json";
-
-
-  
-
-// const credentials = JSON.parse(fs.readFileSync("./config/service-account.json"));
-
-// loading google sheets api credentials
-// const auth = new google.auth.GoogleAuth({
-//     credentials,
-//     scopes :[ "https://www.googleapis.com/auth/spreadsheets"],
-// })
-// const keyFilePath = "./config/service-account.json";
-// console.log("Checking key file:", fs.existsSync(keyFilePath) ? "File exists" : "File NOT found");
-// google sheets setup
-// const sheets = google.sheets({version : "v4", auth});
-// const SPREADSHEET_ID = "1mGkCSqEcItgWWsBNItEikOgkHJJbb_U4swJPSFxHVn4"
-// const SHEET_NAME = "Sheet1";
 
 export const registerTeam = async(req,res) => {
     try{
@@ -79,35 +60,36 @@ export const registerTeam = async(req,res) => {
 
           await newTeam.save();
           
-        //   const maxTeamSize = 5;
-          //   ADDING TO GOOGLE SHEETS
-        //   const values = [
-        //     [
-        //         teamName,
-        //         teamLeader,
-        //         teamLeaderEmail,
-        //         teamSize,
-        //         collegeName,
-        //         stateName,
-        //         parsedEvents.join(", "), // Store events as comma-separated values
-        //         domain,
-        //         utrNumber,
-        //         screenshotUrl || "No Screenshot",
-        //         ...parsedTeamMembers.flatMap((member, index) => [
-        //             member.name || `N/A`,
-        //             member.year || `N/A`,
-        //             member.phone || `N/A`,
-        //             member.email || `N/A`
-        //         ])
-        //     ]
-        // ];
-            
-            // await sheets.spreadsheets.values.append({
-            //     spreadsheetId: SPREADSHEET_ID,
-            //     range: `${SHEET_NAME}!A1`, // Start from first available row
-            //     valueInputOption: "RAW",
-            //     resource: { values },
-            // })
+        // Prepare values for Google Sheets
+      const values = [
+          [
+            teamName,
+            teamLeader,
+            teamLeaderEmail,
+            teamSize,
+            collegeName,
+            stateName,
+            parsedEvents.join(", "),
+            domain,
+            utrNumber,
+            screenshotUrl || "No Screenshot",
+            ...parsedTeamMembers.flatMap((member) => [
+              member.name || "N/A",
+              member.year || "N/A",
+              member.phone || "N/A",
+              member.email || "N/A",
+            ]),
+          ],
+        ];
+  
+      // Push to Google Sheets
+      await sheets.spreadsheets.values.append({
+        spreadsheetId: process.env.GOOGLE_SPREADSHEET_ID,
+        range: "Sheet1!A1",
+        valueInputOption: "USER_ENTERED",
+        requestBody: { values },
+      });
+  
             // finally return the response
             res.status(201).json({ message: "Team registered successfully", team: newTeam });
           
