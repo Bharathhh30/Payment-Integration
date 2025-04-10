@@ -18,6 +18,16 @@ const TeamSchema = new mongoose.Schema({
         lowercase: true, // Ensures consistency
         match: [/^\S+@\S+\.\S+$/, "Invalid email format"] // Email validation
     },
+    teamLeaderPhoneNumber: {
+        type: String,
+        required: true,
+        //match: [/^\d{10,15}$/, "Invalid phone number"] // Ensures valid phone number format
+    },
+    accommodation: {
+        type: String,
+        required: true,
+        enum: ["Yes", "No"]
+    },
     teamSize: {
         type: Number,
         required: true,
