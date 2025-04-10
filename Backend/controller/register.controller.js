@@ -12,6 +12,8 @@ export const registerTeam = async(req,res) => {
             teamName,
             teamLeader,
             teamLeaderEmail,
+            teamLeaderPhoneNumber,
+            accommodation,
             teamSize,
             events,
             domain,
@@ -34,7 +36,7 @@ export const registerTeam = async(req,res) => {
 
         //  console.log("Screenshot Path:", screenShot); // Should log a valid path if uploaded
         // endukaina manchidi ani checking
-        if (!teamName || !teamLeader || !teamLeaderEmail || !teamSize || !parsedEvents.length || !domain || !collegeName) {
+        if (!teamName || !teamLeader || !teamLeaderEmail || !teamLeaderPhoneNumber || !teamSize || !parsedEvents.length || !domain || !collegeName) {
             return res.status(400).json({ message: "All fields are required" });
         }
 
@@ -48,6 +50,8 @@ export const registerTeam = async(req,res) => {
             teamName,
             teamLeader,
             teamLeaderEmail,
+            teamLeaderPhoneNumber,
+            accommodation,
             teamSize,
             events: parsedEvents,
             domain,
@@ -66,6 +70,8 @@ export const registerTeam = async(req,res) => {
             teamName,
             teamLeader,
             teamLeaderEmail,
+            teamLeaderPhoneNumber,
+            accommodation,
             teamSize,
             collegeName,
             stateName,
